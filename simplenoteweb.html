@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Notes App</title>
+  <style>
+  body {
+    text-align: center;
+    font-family: Arial;
+    background-color: burlywood;
+  }
+
+  #notes-list {
+    display: inline-block;
+    text-align: left; 
+  }0
+</style>
+
+</head>
+<body>
+  <h1>My Notes</h1>
+  
+  <input type="text" id="note-title" placeholder="Note title"><br><br>
+  <textarea id="note-text" placeholder="Write your note..."></textarea><br><br>
+  <button onclick="addNote()">Add Note</button>
+
+  <h2>Notes:</h2>
+  <div id="notes-list"></div>
+
+  <script>
+    let notes = [];
+
+    function addNote() {
+      let title = document.getElementById("note-title").value;
+      let text = document.getElementById("note-text").value;
+
+      if (title === "" && text === "") {
+        alert("Please write something!");
+        return;
+      }
+
+      notes.push({title, text});
+      showNotes();
+
+      document.getElementById("note-title").value = "";
+      document.getElementById("note-text").value = "";
+    }
+
+    function showNotes() {
+      let list = document.getElementById("notes-list");
+      list.innerHTML = "";
+
+      if (notes.length === 0) {
+        list.innerHTML = "<p>No notes yet!</p>";
+        return;
+      }
+
+      notes.forEach(function(note, index) {
+        list.innerHTML += 
+        "<p><b>" + (note.title || "(No Title)") + "</b>: " + note.text + 
+        " <button onclick='deleteNote(" + index + ")'>Delete</button></p>";
+      });
+
+    }
+
+    function deleteNote(i) {
+      notes.splice(i, 1);
+      showNotes();
+    }
+  </script>
+</body>
+</html>
